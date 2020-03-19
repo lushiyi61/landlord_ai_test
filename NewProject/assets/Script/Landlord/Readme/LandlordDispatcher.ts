@@ -1,0 +1,17 @@
+
+export const eventDispatcher = new cc.EventTarget();
+
+export const EVENT_MATCH = {
+    MATCH_START: "MATCH:STRAT_GAME",
+    MATCH_INFO: "MATCH:MATCH_INFO",
+}
+
+export const EVENT_GAME = {
+    HOLDS_CHANGE: "GAME:HOLDS_CHANGE",
+    TABLE_INFO: "GAME:TABLE_INFO",      // 重连后刷新界面
+    CALL_BANKER: "GAME:CALL_BANKER",
+    CALL_BANKER_RES: "GAME:CALL_BANKER_RES",
+    BANKER: "GAME:PUSH_BANKER",
+    PUSH_CARD: "CAME:PUSH_CARD",
+    PUSH_CARD_RES: "CAME:PUSH_CARD_RES",
+}
