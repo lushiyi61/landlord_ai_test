@@ -5,8 +5,9 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import { init_socket_game } from "./Landlord/WebSocket/ws";
+import { init_socket_game, socket_game } from "./Landlord/WebSocket/ws";
 import { get_configs } from "./configs";
+import { JoinReq, SERVER_EVENT_ROOM_GOLD, CLIENT_EVENT_ROOM_GOLD } from "./Landlord/Readme/SocketApiRoomGold";
 
 const { ccclass, property } = cc._decorator;
 
@@ -20,14 +21,33 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        /**
+         * 界面
+         */
         this.btn_call_value.active = false;
         this.btn_push_cards.active = false;
+
     }
 
     start() {
         // 初始化WS
         init_socket_game(get_configs().server);
-        // 请求加入比赛场
+
+        /**
+         * WS事件
+         */
+        socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_GOLD.JOIN_RES, this.onEvent_JoinRoom, this);
+        socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_GOLD.START_RES, this.onEvent_GameStart, this);
+
+        // 请求进入房间
+        setTimeout(() => {
+            const params: JoinReq = {
+                game_name: "DDZ"
+            }
+            socket_game.send_msg(SERVER_EVENT_ROOM_GOLD.JOIN_REQ, params);
+        }, 5000);
+
+
     }
 
     // update (dt) {}
@@ -35,6 +55,14 @@ export default class NewClass extends cc.Component {
     /**
      * WS事件
      */
+    // 玩家进入房间
+    onEvent_JoinRoom(params: JoinReq) {
+        cc.log(params);
+    }
+
+    onEvent_GameStart() {
+
+    }
     // 玩家出牌
     // onEventPush_PushCards(params: PushCards) {
     //     cc.log("onEventPush PushCards");

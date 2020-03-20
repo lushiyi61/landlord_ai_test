@@ -12,7 +12,8 @@ import { connect, SocketIOClient } from "../lib/socket.io";
 
 export default class SocketClient {
     io: SocketIOClient.Socket = null;
-    handlers: string[] = [];
+    readonly handlers: string[] = [];
+    readonly eventDispatcher = new cc.EventTarget();
 
     constructor(ws_url: string, is_native = false) {
         if (is_native) {
@@ -57,6 +58,17 @@ export default class SocketClient {
             return;
         }
         this.io.on(event, fn);
+        this.handlers.push(event);
+    }
+
+    add_event = (event: string) => {
+        if (this.handlers.indexOf(event) != -1) {
+            console.error("请勿重复添加事件");
+            return;
+        }
+        this.io.on(event, data => {
+            this.eventDispatcher.emit(event, data);
+        });
         this.handlers.push(event);
     }
 

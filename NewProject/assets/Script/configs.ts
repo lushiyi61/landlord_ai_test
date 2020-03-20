@@ -5,7 +5,7 @@ interface Config {
 const configs = {
     env: "dev",
     dev: {
-        server: "http://192.168.187.136:8000",    // 
+        server: "http://192.168.1.4:8888",    // 
     },
     pro: {
         server: "http://lushiyi.cn:9000",

@@ -7,9 +7,11 @@
 // // import { CLIENT_EVENT_GAME, Holds, Table, CallBanker, CallBankerRes, PushCards, Banker, PushCardsRes } from "../../Api/SocketApi_Game";
 
 import SocketClient from "../../Net/SocketClient";
+import { SERVER_EVENT_BASE, CLIENT_EVENT_BASE, GuestRes } from "../Readme/SocketApiBase";
+import { CLIENT_EVENT_ROOM_GOLD, ErrorRes, JoinRes } from "../Readme/SocketApiRoomGold";
+import { set_my_info } from "../../Manager/UserMgr";
 
 export let socket_game: SocketClient = null;
-
 
 // /**
 //  * 
@@ -21,16 +23,14 @@ export function init_socket_game(url: string, reconnect: boolean = false) {
     //     reconnect = true;   // 需要重连
     // }
     socket_game = new SocketClient(url, cc.sys.isNative);
-    // socket_game.add_handler("connect", handleConnect);
-    // socket_game.add_handler("disconnect", handleDisconnect);
-    // socket_game.add_handler(CLIENT_EVENT_MATCH.MATCH_STRAT, handleMatchStart);
-    // socket_game.add_handler(CLIENT_EVENT_GAME.HOLD, handleHoldsChange);
-    // socket_game.add_handler(CLIENT_EVENT_GAME.TABLE, handleTableInfo);
-    // socket_game.add_handler(CLIENT_EVENT_GAME.CALL, handleCallBanker);
-    // socket_game.add_handler(CLIENT_EVENT_GAME.CALL_RES, handleCallBankerRes);
-    // socket_game.add_handler(CLIENT_EVENT_GAME.BANKER, handlePushBanker);
-    // socket_game.add_handler(CLIENT_EVENT_GAME.PUSH, handlePushCards);
-    // socket_game.add_handler(CLIENT_EVENT_GAME.PUSH_RES, handlePushCardsRes);
+    socket_game.add_handler("connect", handleConnect);
+    socket_game.add_handler(CLIENT_EVENT_BASE.GUEST_RES, handleGuestRes);
+    for (const key in CLIENT_EVENT_ROOM_GOLD) {
+        if (CLIENT_EVENT_ROOM_GOLD.hasOwnProperty(key)) {
+            const element = CLIENT_EVENT_ROOM_GOLD[key];
+            socket_game.add_event(element);
+        }
+    }
 
 
     // if (reconnect) {
@@ -39,13 +39,14 @@ export function init_socket_game(url: string, reconnect: boolean = false) {
     // }
 }
 
-// const handleConnect = () => {
-//     // 发送验证
-//     const params: AuthReq = {
-//         token: get_user_info().token
-//     }
-//     socket_game.send_msg(SERVER_EVENT_BASE.AUTH_REQ, params);
-// }
+const handleConnect = () => {
+    // 发送验证
+    socket_game.send_msg(SERVER_EVENT_BASE.GUEST_REQ, {});
+}
+
+const handleGuestRes = (data: GuestRes) => {
+    set_my_info(data.user_id);
+}
 
 // const handleDisconnect = (data) => {
 //     cc.log(data);
@@ -54,44 +55,3 @@ export function init_socket_game(url: string, reconnect: boolean = false) {
 //     // setTimeout();
 // }
 
-// const handleMatchStart = (data: MatchStart) => {
-//     const params: MatchStart = data;
-//     cc.log(`handleMatchStart: ${JSON.stringify(params)}`);
-//     eventDispatcher.emit(EVENT_MATCH.MATCH_START, params);
-// }
-
-// const handleHoldsChange = (data: Holds) => {
-//     const params: Holds = data;
-//     cc.log(`handleHoldsChange: ${JSON.stringify(params)}`);
-//     eventDispatcher.emit(EVENT_GAME.HOLDS_CHANGE, params);
-// }
-
-// const handleTableInfo = (data: Table) => {
-//     cc.log(data);
-//     eventDispatcher.emit(EVENT_GAME.TABLE_INFO, data);
-// }
-
-// const handleCallBanker = (data: CallBanker) => {
-//     cc.log(data)
-//     eventDispatcher.emit(EVENT_GAME.CALL_BANKER, data);
-// }
-
-// const handleCallBankerRes = (data: CallBankerRes) => {
-//     cc.log(data)
-//     eventDispatcher.emit(EVENT_GAME.CALL_BANKER_RES, data);
-// }
-
-// const handlePushBanker = (data: Banker) => {
-//     cc.log(data)
-//     eventDispatcher.emit(EVENT_GAME.BANKER, data);
-// }
-
-// const handlePushCards = (data: PushCards) => {
-//     cc.log(data)
-//     eventDispatcher.emit(EVENT_GAME.PUSH_CARD, data);
-// }
-
-// const handlePushCardsRes = (data: PushCardsRes) => {
-//     cc.log(data)
-//     eventDispatcher.emit(EVENT_GAME.PUSH_CARD_RES, data);
-// }
