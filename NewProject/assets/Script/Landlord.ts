@@ -7,7 +7,7 @@
 
 import { init_socket_game, socket_game } from "./Landlord/WebSocket/ws";
 import { get_configs } from "./configs";
-import { JoinReq, SERVER_EVENT_ROOM_GOLD, CLIENT_EVENT_ROOM_GOLD } from "./Landlord/Readme/SocketApiRoomGold";
+import { CLIENT_EVENT_ROOM_BASE, SERVER_EVENT_ROOM_BASE, JoinReq } from "./Landlord/Readme/SocketApiRoomBase";
 
 const { ccclass, property } = cc._decorator;
 
@@ -36,15 +36,15 @@ export default class NewClass extends cc.Component {
         /**
          * WS事件
          */
-        socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_GOLD.JOIN_RES, this.onEvent_JoinRoom, this);
-        socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_GOLD.START_RES, this.onEvent_GameStart, this);
+        socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_BASE.JOIN_RES, this.onEvent_JoinRoom, this);
+        socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_BASE.START_RES, this.onEvent_GameStart, this);
 
         // 请求进入房间
         setTimeout(() => {
             const params: JoinReq = {
                 game_name: "DDZ"
             }
-            socket_game.send_msg(SERVER_EVENT_ROOM_GOLD.JOIN_REQ, params);
+            socket_game.send_msg(SERVER_EVENT_ROOM_BASE.JOIN_REQ, params);
         }, 5000);
 
 

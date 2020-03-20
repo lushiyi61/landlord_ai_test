@@ -8,8 +8,8 @@
 
 import SocketClient from "../../Net/SocketClient";
 import { SERVER_EVENT_BASE, CLIENT_EVENT_BASE, GuestRes } from "../Readme/SocketApiBase";
-import { CLIENT_EVENT_ROOM_GOLD, ErrorRes, JoinRes } from "../Readme/SocketApiRoomGold";
 import { set_my_info } from "../../Manager/UserMgr";
+import { CLIENT_EVENT_ROOM_BASE } from "../Readme/SocketApiRoomBase";
 
 export let socket_game: SocketClient = null;
 
@@ -25,9 +25,9 @@ export function init_socket_game(url: string, reconnect: boolean = false) {
     socket_game = new SocketClient(url, cc.sys.isNative);
     socket_game.add_handler("connect", handleConnect);
     socket_game.add_handler(CLIENT_EVENT_BASE.GUEST_RES, handleGuestRes);
-    for (const key in CLIENT_EVENT_ROOM_GOLD) {
-        if (CLIENT_EVENT_ROOM_GOLD.hasOwnProperty(key)) {
-            const element = CLIENT_EVENT_ROOM_GOLD[key];
+    for (const key in CLIENT_EVENT_ROOM_BASE) {
+        if (CLIENT_EVENT_ROOM_BASE.hasOwnProperty(key)) {
+            const element = CLIENT_EVENT_ROOM_BASE[key];
             socket_game.add_event(element);
         }
     }
