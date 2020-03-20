@@ -7,10 +7,11 @@
 
 import { init_socket_game, socket_game } from "./Landlord/WebSocket/ws";
 import { get_configs } from "./configs";
-import { CLIENT_EVENT_ROOM_BASE, SERVER_EVENT_ROOM_BASE, JoinReq } from "./Landlord/Readme/SocketApiRoomBase";
+import { CLIENT_EVENT_ROOM_BASE, SERVER_EVENT_ROOM_BASE, JoinReq, JoinRes } from "./Landlord/Readme/SocketApiRoomBase";
 import { SERVER_EVENT_GAME, HoldCardsPush, CallValuePush, GAME_STATE } from "./Landlord/Readme/SocketApiGameDDZ";
 import TableRes from "./Landlord/PokerUtil/TableRes";
 import Poker from "./Landlord/PokerUtil/Poker";
+import { get_my_info } from "./Manager/UserMgr";
 
 const { ccclass, property } = cc._decorator;
 
@@ -107,7 +108,9 @@ export default class NewClass extends cc.Component {
      * WS事件
      */
     // 玩家进入房间
-    onEvent_JoinRoom(params: JoinReq) {
+    onEvent_JoinRoom(params: JoinRes) {
+        this.seat_idx = params.seat_info.indexOf(get_my_info().user_id);
+        cc.log(this.seat_idx);
         cc.log(params);
     }
 
