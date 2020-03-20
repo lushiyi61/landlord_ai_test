@@ -13,6 +13,9 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class NewClass extends cc.Component {
+    @property(cc.Animation)
+    ani_game_start: cc.Animation = null;
+
     @property(cc.Node)
     btn_call_value: cc.Node = null;
 
@@ -61,7 +64,12 @@ export default class NewClass extends cc.Component {
     }
 
     onEvent_GameStart() {
+        cc.log("Game start");
 
+        if (this.ani_game_start) {
+            let ani = this.ani_game_start.getComponent(cc.Animation);
+            ani.play();
+        }
     }
     // 玩家出牌
     // onEventPush_PushCards(params: PushCards) {
