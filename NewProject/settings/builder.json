@@ -1,5 +1,7 @@
 {
-  "excludeScenes": [],
+  "excludeScenes": [
+    "f910bd28-1a99-4a23-94f5-e6bf42d56204"
+  ],
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
@@ -7,7 +9,7 @@
     "upsideDown": false
   },
   "packageName": "org.cocos2d.helloworld",
-  "startScene": "ff576b13-1fe0-48ee-9f03-232ef130ea43",
+  "startScene": "6aace10a-69a3-41ba-b994-c60c9c3ec549",
   "title": "LandlordAI_beta",
   "webOrientation": "auto",
   "includeSDKBox": false,

@@ -75,29 +75,30 @@ export default class NewClass extends cc.Component {
 
     start() {
         // 初始化WS
-        init_socket_game(get_configs().server);
-        for (const key in SERVER_EVENT_GAME) {
-            if (SERVER_EVENT_GAME.hasOwnProperty(key)) {
-                const element = SERVER_EVENT_GAME[key];
-                socket_game.add_event(element);
-            }
-        }
+
+        // init_socket_game(get_configs().server);
+        // for (const key in SERVER_EVENT_GAME) {
+        //     if (SERVER_EVENT_GAME.hasOwnProperty(key)) {
+        //         const element = SERVER_EVENT_GAME[key];
+        //         socket_game.add_event(element);
+        //     }
+        // }
 
         /**
          * WS事件
          */
-        socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_BASE.JOIN_RES, this.onEvent_JoinRoom, this);
-        socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_BASE.START_RES, this.onEvent_GameStart, this);
-        socket_game.eventDispatcher.on(SERVER_EVENT_GAME.HOLD, this.onEvent_HoldPush, this);
-        socket_game.eventDispatcher.on(SERVER_EVENT_GAME.CALL, this.onEvent_CallValue, this);
+        // socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_BASE.JOIN_RES, this.onEvent_JoinRoom, this);
+        // socket_game.eventDispatcher.on(CLIENT_EVENT_ROOM_BASE.START_RES, this.onEvent_GameStart, this);
+        // socket_game.eventDispatcher.on(SERVER_EVENT_GAME.HOLD, this.onEvent_HoldPush, this);
+        // socket_game.eventDispatcher.on(SERVER_EVENT_GAME.CALL, this.onEvent_CallValue, this);
 
-        // 请求进入房间
-        setTimeout(() => {
-            const params: JoinReq = {
-                game_name: "DDZ"
-            }
-            socket_game.send_msg(SERVER_EVENT_ROOM_BASE.JOIN_REQ, params);
-        }, 5000);
+        // // 请求进入房间
+        // setTimeout(() => {
+        //     const params: JoinReq = {
+        //         game_name: "DDZ"
+        //     }
+        //     socket_game.send_msg(SERVER_EVENT_ROOM_BASE.JOIN_REQ, params);
+        // }, 5000);
 
 
     }
