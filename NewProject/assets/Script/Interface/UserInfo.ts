@@ -12,7 +12,7 @@ export interface UserInfo extends UserInfoBase {
     province: string,
     encryptedData: string,
     iv: string,
-    
+
     // avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJp7tdOnYWfJDKlRr90yqbxWM6gvmayRtumNp4ITuP4hdTDXcQcGeAwic7GpQSMWeunJcpiat8Dtniag/132"
     // city: "Hengyang"
     // country: "China"
@@ -22,7 +22,7 @@ export interface UserInfo extends UserInfoBase {
     // province: "Hunan"
 }
 
-interface UserInfoBase {
+export interface UserInfoBase {
     // 服务端信息
     user_id: number,   // 用户ID
 

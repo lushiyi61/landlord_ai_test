@@ -5,13 +5,13 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import { init_socket_game, socket_game } from "./Landlord/WebSocket/ws";
-import { get_configs } from "./configs";
-import { CLIENT_EVENT_ROOM_BASE, SERVER_EVENT_ROOM_BASE, JoinReq, JoinRes } from "./Landlord/Readme/SocketApiRoomBase";
-import { SERVER_EVENT_GAME, HoldCardsPush, CallValuePush, GAME_STATE } from "./Landlord/Readme/SocketApiGameDDZ";
-import TableRes from "./Landlord/PokerUtil/TableRes";
-import Poker from "./Landlord/PokerUtil/Poker";
-import { get_my_info } from "./Manager/UserMgr";
+import { init_socket_game, socket_game } from "../../Landlord/WebSocket/ws";
+import { get_configs } from "../../configs";
+import { CLIENT_EVENT_ROOM_BASE, SERVER_EVENT_ROOM_BASE, JoinReq, JoinRes } from "../../Landlord/Readme/SocketApiRoomBase";
+import { SERVER_EVENT_GAME, HoldCardsPush, CallValuePush, GAME_STATE } from "../../Landlord/Readme/SocketApiGameDDZ";
+import TableRes from "../../Landlord/PokerUtil/TableRes";
+import Poker from "../../Landlord/PokerUtil/Poker";
+import { get_my_info } from "../../Manager/UserMgr";
 
 const { ccclass, property } = cc._decorator;
 
