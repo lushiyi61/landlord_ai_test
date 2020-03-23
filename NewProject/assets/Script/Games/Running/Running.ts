@@ -60,7 +60,7 @@ export default class NewClass extends cc.Component {
 
     // UI
     doUpdateUserInfo() {
-        this.user_game_infos.map((user_info, index) => {
+        for (let index = 0; index <= this.user_game_infos.length; index++) {
             let node: cc.Node = null;
             switch (index) {
                 case 0: node = this.node_seat_self; break;
@@ -69,23 +69,29 @@ export default class NewClass extends cc.Component {
                 case 3: node = this.node_seat_left; break;
             }
             if (index == 2 && this.seat_num == 3) {
+                node.active = false;
                 node = this.node_seat_left;
             }
+            if (this.user_game_infos[index]) {
+                node.active = true;
+                const avatar = node.getChildByName("avatar");
+                cc.loader.load({
+                    url: this.user_game_infos[index].avatarUrl,
+                    type: 'jpg'
+                }, (error, tuxture) => {
+                    if (!error) {
+                        const frame = new cc.SpriteFrame(tuxture);
+                        avatar.getComponent(cc.Sprite).spriteFrame = frame;
+                    }
+                });
+                const name = node.getChildByName("name");
+                name.getComponent(cc.Label).string = this.user_game_infos[index].nickName;
+                const score = node.getChildByName("score");
+                score.getComponent(cc.Label).string = this.user_game_infos[index].score.toString();
+            } else {
+                node.active = false;
+            }
 
-            const avatar = node.getChildByName("avatar");
-            cc.loader.load({
-                url: user_info.avatarUrl,
-                type: 'jpg'
-            }, (error, tuxture) => {
-                if (!error) {
-                    const frame = new cc.SpriteFrame(tuxture);
-                    avatar.getComponent(cc.Sprite).spriteFrame = frame;
-                }
-            });
-            const name = node.getChildByName("name");
-            name.getComponent(cc.Label).string = user_info.nickName;
-            const score = node.getChildByName("score");
-            score.getComponent(cc.Label).string = user_info.score.toString();
-        })
+        }
     }
 }
